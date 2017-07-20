@@ -2,6 +2,7 @@
     "name": "jcbl/booliwrapper",
     "description": "A lightweight API wrapper for the Booli API written in PHP.",
     "keywords": ["Booli", "API", "wrapper"],
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "authors": [
