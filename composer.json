@@ -1,0 +1,22 @@
+{
+    "name": "jcbl/booliwrapper",
+    "description": "A lightweight API wrapper for the Booli API written in PHP.",
+    "keywords": ["Booli", "API", "wrapper"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonas Lilja",
+            "email": "jonas@lilja.io",
+            "homepage": "https://lilja.io"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Jcbl\\Booliwrapper\\" : "src"
+        }
+    }
+}
