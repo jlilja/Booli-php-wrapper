@@ -87,7 +87,7 @@ class Booli
 
 				$image = 'https://api.bcdn.se/cache/primary_' . $item->booliId . '_140x94.jpg';
 
-				if ($this->getimagesize($image) === 1027) {
+				if ($this->getImageSize($image) === 1027) {
 					$item->image = null;
 				} else {
 					$item->image = $image;
@@ -101,7 +101,7 @@ class Booli
 		}
 	}
 
-	function getimagesize($image)
+	function getImageSize($image)
     {
 		$result = false;
 
