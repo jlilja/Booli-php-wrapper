@@ -4,8 +4,6 @@ A lightweight API wrapper for the Booli API written in PHP.
 ## Basic usage
 Initialize a new instance of the Booli wrapper class.
 
-    require 'Booli.php';
-
     $booli = new Booli();
     $booli->setApiKey('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     $booli->setCallerId('john doe');
