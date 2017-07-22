@@ -2,7 +2,8 @@
 
 namespace Jcbl\Booliwrapper;
 
-// use Jcbl\Booliwrapper\ListingInterface;
+use Jcbl\Booliwrapper\ListingInterface;
+use Jcbl\Booliwrapper\Authentication;
 use stdClass;
 
 class Booli implements ListingInterface
@@ -11,6 +12,11 @@ class Booli implements ListingInterface
 	private $callerId;
 
 	protected $host = 'http://api.booli.se/listings/';
+
+	public function __construct()
+	{
+		$this->auth = new Authentication();
+	}
 
 	public function setApiKey($key)
 	{
@@ -37,20 +43,9 @@ class Booli implements ListingInterface
 		return $this->host;
 	}
 
-	private function getAuthInfo()
-	{
-		$params = [];
-		$params['callerId'] = $this->callerId;
-		$params['time'] = time();
-		$params['unique'] = rand(0, PHP_INT_MAX);
-		$params['hash'] = sha1($this->callerId . $params['time'] . $this->apiKey . $params['unique']);
-
-		return $params;
-	}
-
 	public function getListing($city, $filters = null)
 	{
-		$params = $this->getAuthInfo();
+		$params = $this->auth->getAuthInfo($this->callerId, $this->apiKey);
 		$params['q'] = $city;
 
 		if ($filters) {
@@ -61,19 +56,19 @@ class Booli implements ListingInterface
 
 		$url = $this->host . "?" . http_build_query($params);
 
-		$this->response = json_decode($this->request($url));
+		$this->response = json_decode($this->auth->request($url));
 
 		return $this;
 	}
 
 	public function getSingleListing($id)
 	{
-		$params = $this->getAuthInfo();
+		$params = $this->auth->getAuthInfo($this->callerId, $this->apiKey);
 
 		$url = $this->host . $id . "?&" . http_build_query($params);
 
 		if ($this->request($url)) {
-			$this->response = json_decode($this->request($url));
+			$this->response = json_decode($this->auth->request($url));
 		} else {
 			$this->response = null;
 		}
@@ -84,10 +79,10 @@ class Booli implements ListingInterface
 	public function getLatest()
 	{
 		$counties = [
-			// 'Blekinge',
-			// 'Dalarna',
-			// 'Gotland',
-			// 'Gävleborg',
+			'Blekinge',
+			'Dalarna',
+			'Gotland',
+			'Gävleborg',
 			'Halland',
 			'Jämtland',
 			'Jönköping',
@@ -98,35 +93,35 @@ class Booli implements ListingInterface
 			'Stockholm',
 			'Södermanland',
 			'Uppsala',
-			// 'Uppsala',
-			// 'Värmland',
-			// 'Västerbotten',
-			// 'Västernorrland',
-			// 'Västmanland',
-			// 'Västra Götaland',
-			// 'Örebro',
-			// 'Östergötland'
+			'Uppsala',
+			'Värmland',
+			'Västerbotten',
+			'Västernorrland',
+			'Västmanland',
+			'Västra Götaland',
+			'Örebro',
+			'Östergötland'
 		];
 
-		// $response = new StdClass();
+		$response = new StdClass();
 
-		// $filter = ['minPublished' => date("Ymd")];
+		$filter = ['minPublished' => date("Ymd")];
 
-		// $count = 0;
+		$count = 0;
 
-		// foreach ($counties as $county) {
-		// 	$response->$county = $this->getListing($county, $filter);
-		// 	$count = $count + $response->$county->response->count;
-		// 	unset($response->$county->response->count);
-		// 	unset($response->$county->response->totalCount);
-		// 	unset($response->$county->response->limit);
-		// 	unset($response->$county->response->offset);
-		// 	unset($response->$county->response->searchParams);
-		// }
+		foreach ($counties as $county) {
+			$response->$county = $this->getListing($county, $filter);
+			$count = $count + $response->$county->response->count;
+			unset($response->$county->response->count);
+			unset($response->$county->response->totalCount);
+			unset($response->$county->response->limit);
+			unset($response->$county->response->offset);
+			unset($response->$county->response->searchParams);
+		}
 
-		// $response->totalCount = $count;
+		$response->totalCount = $count;
 
-		// echo json_encode($response);
+		echo json_encode($response);
 	}
 
 	public function withImages()
@@ -186,21 +181,6 @@ class Booli implements ListingInterface
 		return $result;
 	}
 
-	private function request($url)
-	{
-		$curl = curl_init($url);
-		curl_setopt_array($curl, array(
-			CURLOPT_RETURNTRANSFER => true
-		));
-		$response = curl_exec($curl);
-		$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		curl_close($curl);
-
-		if ($httpCode != 200) {
-			$response = null;
-		}
-
-		return $response;
-	}
+	
 
 }
