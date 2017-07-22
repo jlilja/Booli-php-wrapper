@@ -2,7 +2,10 @@
 
 namespace Jcbl\Booliwrapper;
 
-class Booli
+// use Jcbl\Booliwrapper\ListingInterface;
+use stdClass;
+
+class Booli implements ListingInterface
 {
 	private $apiKey;
 	private $callerId;
@@ -76,6 +79,54 @@ class Booli
 		}
 
 		return $this;
+	}
+
+	public function getLatest()
+	{
+		$counties = [
+			// 'Blekinge',
+			// 'Dalarna',
+			// 'Gotland',
+			// 'Gävleborg',
+			'Halland',
+			'Jämtland',
+			'Jönköping',
+			'Kalmar',
+			'Kronoberg',
+			'Norrbotten',
+			'Skåne',
+			'Stockholm',
+			'Södermanland',
+			'Uppsala',
+			// 'Uppsala',
+			// 'Värmland',
+			// 'Västerbotten',
+			// 'Västernorrland',
+			// 'Västmanland',
+			// 'Västra Götaland',
+			// 'Örebro',
+			// 'Östergötland'
+		];
+
+		// $response = new StdClass();
+
+		// $filter = ['minPublished' => date("Ymd")];
+
+		// $count = 0;
+
+		// foreach ($counties as $county) {
+		// 	$response->$county = $this->getListing($county, $filter);
+		// 	$count = $count + $response->$county->response->count;
+		// 	unset($response->$county->response->count);
+		// 	unset($response->$county->response->totalCount);
+		// 	unset($response->$county->response->limit);
+		// 	unset($response->$county->response->offset);
+		// 	unset($response->$county->response->searchParams);
+		// }
+
+		// $response->totalCount = $count;
+
+		// echo json_encode($response);
 	}
 
 	public function withImages()
