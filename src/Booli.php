@@ -4,48 +4,29 @@ namespace Jcbl\Booliwrapper;
 
 use Jcbl\Booliwrapper\ListingInterface;
 use Jcbl\Booliwrapper\Authentication;
-use stdClass;
+use Exception;
 
 class Booli implements ListingInterface
 {
-	private $apiKey;
-	private $callerId;
-
 	protected $host = 'http://api.booli.se/listings/';
 
-	public function __construct()
+	public function __construct($callerId = null, $apiKey = null)
 	{
-		$this->auth = new Authentication();
+		if ($callerId && $apiKey) {
+			$this->auth = new Authentication($callerId, $apiKey);
+		} else {
+			throw new Exception("Provide a valid caller ID and API key");
+		}
 	}
 
-	public function setApiKey($key)
+	public function get()
 	{
-		$this->apiKey = $key;
+		return $this->response;
 	}
 
-	public function setCallerId($id)
+	public function listing($city, $filters = null)
 	{
-		$this->callerId = $id;
-	}
-
-	public function getApiKey()
-	{
-		return $this->apiKey;
-	}
-
-	public function getCallerId()
-	{
-		return $this->callerId;
-	}
-
-	public function getHost()
-	{
-		return $this->host;
-	}
-
-	public function getListing($city, $filters = null)
-	{
-		$params = $this->auth->getAuthInfo($this->callerId, $this->apiKey);
+		$params = $this->auth->getAuthInfo();
 		$params['q'] = $city;
 
 		if ($filters) {
@@ -56,78 +37,49 @@ class Booli implements ListingInterface
 
 		$url = $this->host . "?" . http_build_query($params);
 
-		$this->response = json_decode($this->auth->request($url));
+		$this->response = $this->auth->request($url);
 
 		return $this;
 	}
 
-	public function getSingleListing($id)
+	public function single($id)
 	{
-		$params = $this->auth->getAuthInfo($this->callerId, $this->apiKey);
+		$params = $this->auth->getAuthInfo();
 
 		$url = $this->host . $id . "?&" . http_build_query($params);
 
-		if ($this->request($url)) {
-			$this->response = json_decode($this->auth->request($url));
-		} else {
-			$this->response = null;
-		}
+		$this->response = $this->auth->request($url);
 
 		return $this;
 	}
 
-	public function getLatest()
+	private function counties()
 	{
-		$counties = [
-			'Blekinge',
-			'Dalarna',
-			'Gotland',
-			'Gävleborg',
-			'Halland',
-			'Jämtland',
-			'Jönköping',
-			'Kalmar',
-			'Kronoberg',
-			'Norrbotten',
-			'Skåne',
-			'Stockholm',
-			'Södermanland',
-			'Uppsala',
-			'Uppsala',
-			'Värmland',
-			'Västerbotten',
-			'Västernorrland',
-			'Västmanland',
-			'Västra Götaland',
-			'Örebro',
-			'Östergötland'
-		];
+		return json_decode(file_get_contents("src/data.json"), true);
+	}
 
-		$response = new StdClass();
-
+	public function latest()
+	{
+		$counties = $this->counties()['counties'];
 		$filter = ['minPublished' => date("Ymd")];
-
-		$count = 0;
+		$array['listings'] = [];
 
 		foreach ($counties as $county) {
-			$response->$county = $this->getListing($county, $filter);
-			$count = $count + $response->$county->response->count;
-			unset($response->$county->response->count);
-			unset($response->$county->response->totalCount);
-			unset($response->$county->response->limit);
-			unset($response->$county->response->offset);
-			unset($response->$county->response->searchParams);
+			$data = json_decode($this->listing($county, $filter)->response, true);
+			foreach ($data['listings'] as $item) {
+				array_push($array['listings'], $item);
+			}
 		}
 
-		$response->totalCount = $count;
+		$this->response = json_encode($array);
 
-		echo json_encode($response);
+		return $this;
 	}
 
 	public function withImages()
 	{
 		if ($this->response) {
-			$response = $this->response;
+			$response = json_decode($this->response);
 
 			foreach ($response->listings as $item) {
 
@@ -141,14 +93,14 @@ class Booli implements ListingInterface
 
 			}
 
-			$this->response = $response;
+			$this->response = json_encode($response);
 
 			return $this;
 		}
 	}
 
 	function getImageSize($image)
-    {
+	{
 		$result = false;
 
 		$curl = curl_init($image);
@@ -180,7 +132,4 @@ class Booli implements ListingInterface
 
 		return $result;
 	}
-
-	
-
 }
