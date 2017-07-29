@@ -1,22 +1,28 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
  
 use Jcbl\Booliwrapper\Booli;
+use Dotenv\Dotenv;
+
+$dotenv = new Dotenv(dirname(__DIR__));
+$dotenv->load();
  
 class BooliTest extends PHPUnit_Framework_TestCase {
 
 	public function __construct()
 	{
-		$this->booli = new Booli();
+		$this->booli = new Booli(getenv('CALLER_ID'), getenv('API_KEY'));
 	}
  
-	public function testBooliHasMethodGetListing()
+	public function testBooliHasMethodListing()
 	{
-		$this->assertTrue(method_exists($this->booli, 'getListing'), 'Class does not have method getListing');
+		$this->assertTrue(method_exists($this->booli, 'listing'), 'Class does not have method listing');
 	}
 
-	public function testBooliHasMethodGetSingleListing()
+	public function testBooliHasMethodSingle()
 	{
-		$this->assertTrue(method_exists($this->booli, 'getSingleListing'), 'Class does not have method getSingleListing');
+		$this->assertTrue(method_exists($this->booli, 'single'), 'Class does not have method single');
 	}
 
 	public function testBooliHasMethodWithImages()
