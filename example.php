@@ -2,8 +2,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Jcbl\Booliwrapper\Booli as Booli;
-use Dotenv\Dotenv as Dotenv;
+use Jcbl\Booliwrapper\Booli;
+use Dotenv\Dotenv;
 
 /*
 	Example made by Jonas Lilja (lilja.io)
@@ -13,14 +13,12 @@ use Dotenv\Dotenv as Dotenv;
 $dotenv = new Dotenv(__DIR__);
 $dotenv->load();
 
-$booli = new Booli();
-$booli->setApiKey(getenv('API_KEY'));
-$booli->setCallerId(getenv('CALLER_ID'));
+$booli = new Booli(getenv('CALLER_ID'), getenv('API_KEY'));
 
 $filters = [
 	'maxListPrice' => 4000000,
 ];
 
-$test = $booli->getListing('Stockholm');
+$listing = $booli->latest()->get();
 
-echo json_encode($test->response);
+echo $listing;
