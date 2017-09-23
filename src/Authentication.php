@@ -3,6 +3,7 @@
 namespace Jcbl\Booliwrapper;
 
 use Dotenv\Dotenv;
+use GuzzleHttp\Client;
 
 class Authentication
 {
@@ -29,20 +30,14 @@ class Authentication
 
 	public function request($url)
 	{
-		$curl = curl_init($url);
-		curl_setopt_array($curl, [
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT'],
-			CURLOPT_REFERER => getenv('REFERER'),
+		$client = new Client();
+		$res = $client->request('GET', $url, [
+			'headers' => [
+				'User-Agent' => $_SERVER['HTTP_USER_AGENT'],
+				'Referer' => getenv('REFERER')
+			]
 		]);
-		$response = curl_exec($curl);
-		$httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		curl_close($curl);
 
-		if ($httpCode != 200) {
-			$response = null;
-		}
-
-		return $response;
+		echo $res->getBody();
 	}
 }
