@@ -17,7 +17,7 @@ class Booli
 
 	public function __call($method, $args)
 	{
-		$class = '\\Jcbl\\Booliwrapper\\Classes\\' . ucfirst($method);
+		$class = '\\Jcbl\\Booliwrapper\\Http\\' . ucfirst($method);
 
 		$this->response = new $class($this);
 

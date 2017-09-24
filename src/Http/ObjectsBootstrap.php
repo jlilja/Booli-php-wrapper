@@ -1,6 +1,6 @@
 <?php
 
-namespace Jcbl\Booliwrapper\Classes;
+namespace Jcbl\Booliwrapper\Http;
 
 use Jcbl\Booliwrapper\Booli;
 
