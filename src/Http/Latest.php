@@ -8,6 +8,7 @@ class Latest extends ObjectsBootstrap
 {
 	private function counties()
 	{
+		throw new ImplementationException();
 		// return json_decode(file_get_contents("src/data.json"), true);
 	}
 
