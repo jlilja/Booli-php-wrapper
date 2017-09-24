@@ -16,11 +16,13 @@ Initialize a new instance of the Booli wrapper class. Provide your key and calle
 
 After that you can make listing calls like this.
 
-    $filters = [
-        'maxListPrice' => 4000000,
-    ];
-    
-    $listing = $booli->latest()->get();
+    $listing = $booli->listing()->all([
+        'q' => 'stockholm',
+        'limit' => 3,
+        'filters' => [
+            'maxListPrice' => 2000000
+        ]
+    ]);
 
     echo $listing;
 
@@ -29,15 +31,13 @@ The get method accesses the response property, returning a json response.
 
 ## Available methods
 
-| Endpoint      | Method name            | Verb  |
-|---------------|------------------------|-------|
-| listings      | getListing             | GET   |
-| listing:id    | getSingleListing       | GET   |
-| latest        | getLatest              | GET   |
-| images        | (chained) withImages * | GET   |
-| get           | (chained) get          | GET   |
-
-(*) Calls a recursive method checking wether the image actually exists instead of serving a default image.
+| Endpoint      | Method name            |
+|---------------|------------------------|
+| listings      | all                    |
+| listings      | single                 |
+| sold          | all                    |
+| sold          | single                 |
+| area          | get                    |
 
     Example made by Jonas Lilja (lilja.io)
     You can find the repository for this project at https://github.com/jlilja/Booli-php-wrapper
