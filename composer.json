@@ -4,7 +4,6 @@
     "keywords": ["Booli", "API", "wrapper"],
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Jonas Lilja",
