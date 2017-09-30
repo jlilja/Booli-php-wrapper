@@ -3,10 +3,10 @@
 require_once __DIR__ . '/../vendor/autoload.php';
  
 use Jcbl\Booliwrapper\Booli;
-use Dotenv\Dotenv;
+// use Dotenv\Dotenv;
 
-$dotenv = new Dotenv(dirname(__DIR__));
-$dotenv->load();
+// $dotenv = new Dotenv(dirname(__DIR__));
+// $dotenv->load();
  
 class BooliTest extends PHPUnit_Framework_TestCase {
 
