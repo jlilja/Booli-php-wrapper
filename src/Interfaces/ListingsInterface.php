@@ -4,6 +4,6 @@ namespace Jcbl\Booliwrapper\Interfaces;
 
 interface ListingsInterface
 {
-	public function all($args);
-	public function single($id);
+    public function all($args);
+    public function single($id);
 }

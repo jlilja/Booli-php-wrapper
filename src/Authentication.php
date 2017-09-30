@@ -5,39 +5,49 @@ namespace Jcbl\Booliwrapper;
 use Dotenv\Dotenv;
 use GuzzleHttp\Client;
 
+/**
+ * Authentication class
+ * @author Jonas Lilja <jonas@lilja.io>
+ * @param string $callerId
+ * @param string $apiKey
+ */
 class Authentication
 {
-	private $callerId;
+    private $callerId;
 
-	private $apiKey;
+    private $apiKey;
 
-	public function __construct($callerId, $apiKey)
-	{
-		$this->callerId = $callerId;
-		$this->apiKey = $apiKey;
-	}
+    public function __construct($callerId, $apiKey)
+    {
+        $this->callerId = $callerId;
+        $this->apiKey = $apiKey;
+    }
 
-	public function getAuthInfo()
-	{
-		$params = [];
-		$params['callerId'] = $this->callerId;
-		$params['time'] = time();
-		$params['unique'] = rand(0, PHP_INT_MAX);
-		$params['hash'] = sha1($this->callerId . $params['time'] . $this->apiKey . $params['unique']);
+    public function getAuthInfo()
+    {
+        $params = [];
+        $params['callerId'] = $this->callerId;
+        $params['time'] = time();
+        $params['unique'] = rand(0, PHP_INT_MAX);
+        $params['hash'] = sha1($this->callerId . $params['time'] . $this->apiKey . $params['unique']);
 
-		return $params;
-	}
+        return $params;
+    }
 
-	public function request($url)
-	{
-		$client = new Client();
-		$res = $client->request('GET', $url, [
-			'headers' => [
-				'User-Agent' => $_SERVER['HTTP_USER_AGENT'],
-				'Referer' => getenv('REFERER')
-			]
-		]);
+    public function request($url)
+    {
+        $client = new Client();
+        $res = $client->request(
+            'GET',
+            $url,
+            [
+                'headers' => [
+                    'User-Agent' => $_SERVER['HTTP_USER_AGENT'],
+                    'Referer' => getenv('REFERER')
+                ]
+            ]
+        );
 
-		echo $res->getBody();
-	}
+        echo $res->getBody();
+    }
 }

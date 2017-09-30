@@ -6,8 +6,8 @@ use BadMethodCallException;
 
 class ImplementationException extends BadMethodCallException
 {
-	public function __construct()
-	{
-		echo "Not yet implemented";
-	}
+    public function __construct()
+    {
+        echo "Not yet implemented";
+    }
 }

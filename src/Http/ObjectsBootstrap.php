@@ -7,30 +7,30 @@ use Jcbl\Booliwrapper\Authentication;
 
 class ObjectsBootstrap implements ListingsInterface
 {
-	public function __construct(Authentication $authentication)
-	{
-		$this->auth = $authentication;
-	}
+    public function __construct(Authentication $authentication)
+    {
+        $this->auth = $authentication;
+    }
 
-	public function all($filters)
-	{
-		$params = http_build_query($this->auth->getAuthInfo());
+    public function all($filters)
+    {
+        $params = http_build_query($this->auth->getAuthInfo());
 
-		if ($filters['filters']) {
-			$filters = http_build_query($filters);
-		}
+        if ($filters['filters']) {
+            $filters = http_build_query($filters);
+        }
 
-		$url = $this->host . "?" . $params . '&' . $filters;
+        $url = $this->host . "?" . $params . '&' . $filters;
 
-		return $this->auth->request($url);
-	}
+        return $this->auth->request($url);
+    }
 
-	public function single($id)
-	{
-		$params = $this->auth->getAuthInfo();
+    public function single($id)
+    {
+        $params = $this->auth->getAuthInfo();
 
-		$url = $this->host . $id . "?&" . http_build_query($params);
+        $url = $this->host . $id . "?&" . http_build_query($params);
 
-		return $this->auth->request($url);
-	}
+        return $this->auth->request($url);
+    }
 }
