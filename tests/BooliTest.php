@@ -5,17 +5,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Jcbl\Booliwrapper\Booli;
 use Dotenv\Dotenv;
 
-
 $dotenv = new Dotenv(dirname(__DIR__));
-if (file_exists('../.env')) {
-    $dotenv->load();
-}
-
+$dotenv->load();
+ 
 class BooliTest extends PHPUnit_Framework_TestCase {
 
     public function __construct()
     {
-        $this->booli = new Booli($_ENV['CALLER_ID'], $_ENV['API_KEY']);
+        $this->booli = new Booli(getenv('CALLER_ID'), getenv('API_KEY'));
     }
 
     public function EndpointsShouldReturnJson($endpoint, $count, $expected)
