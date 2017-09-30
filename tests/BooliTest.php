@@ -12,7 +12,7 @@ class BooliTest extends PHPUnit_Framework_TestCase {
 
     public function __construct()
     {
-        $this->booli = new Booli(getenv('CALLER_ID'), getenv('API_KEY'));
+        $this->booli = new Booli($_ENV['CALLER_ID'], $_ENV['API_KEY']);
     }
 
     public function EndpointsShouldReturnJson($endpoint, $count, $expected)
