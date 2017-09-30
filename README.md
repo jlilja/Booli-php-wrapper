@@ -1,6 +1,12 @@
 # Booli API wrapper
 A lightweight API wrapper for the Booli API written in PHP.
 
+[![Build Status](https://travis-ci.org/jlilja/Booli-php-wrapper.svg?branch=master)](https://travis-ci.org/jlilja/Booli-php-wrapper)
+[![Packagist](https://img.shields.io/packagist/v/jlilja/Booli-php-wrapper.svg)]()
+
+## Installing
+    composer require jcbl/booliwrapper
+
 ## Basic usage
 Initialize a new instance of the Booli wrapper class. Provide your key and caller id. I prefer to do it with .env.
 
@@ -33,11 +39,8 @@ The get method accesses the response property, returning a json response.
 
 | Endpoint      | Method name            |
 |---------------|------------------------|
-| listings      | all                    |
-| listings      | single                 |
-| sold          | all                    |
-| sold          | single                 |
-| area          | get                    |
-
-    Example made by Jonas Lilja (lilja.io)
-    You can find the repository for this project at https://github.com/jlilja/Booli-php-wrapper
+| listings      | listing()->all         |
+| listings      | listing()->single      |
+| sold          | sold()->all            |
+| sold          | sold()->single         |
+| area          | area()->get            |
