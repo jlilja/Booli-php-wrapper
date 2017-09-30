@@ -37,17 +37,19 @@ class Authentication
     public function request($url)
     {
         $client = new Client();
-        $res = $client->request(
+        $response = $client->request(
             'GET',
             $url,
             [
                 'headers' => [
-                    'User-Agent' => $_SERVER['HTTP_USER_AGENT'],
-                    'Referer' => getenv('REFERER')
+                    'User-Agent' => '',
+                    'Referer' => 'https://github.com/jlilja/Booli-php-wrapper'
                 ]
             ]
         );
 
-        echo $res->getBody();
+        $response = $response->getBody()->getContents();
+
+        return $response;
     }
 }
