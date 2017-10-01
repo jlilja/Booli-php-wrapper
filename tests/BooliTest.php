@@ -1,55 +1,36 @@
 <?php
 
+namespace Jcbl\Tests;
+
+use Jcbl\Tests\SampleRequest;
+use PHPUnit_Framework_TestCase;
+
 require_once __DIR__ . '/../vendor/autoload.php';
- 
-use Jcbl\Booliwrapper\Booli;
-use Dotenv\Dotenv;
 
-$dotenv = new Dotenv(dirname(__DIR__));
-if (file_exists('.env')) {
-    $dotenv->load();
-}
-
-class BooliTest extends PHPUnit_Framework_TestCase {
-
+class BooliTest extends PHPUnit_Framework_TestCase 
+{
     public function __construct()
     {
-        $this->booli = new Booli(getenv('CALLER_ID'), getenv('API_KEY'));
-    }
-
-    public function EndpointsShouldReturnJson($endpoint, $count, $expected)
-    {
-        $response = $this
-            ->booli
-            ->{$endpoint}()
-            ->{$count}([
-            'q' => 'stockholm',
-            'limit' => 3,
-            'filters' => [
-                'maxListPrice' => 2000000
-            ]
-        ]);
-
-        $this->assertJson($response);
+        $this->booli = new SampleRequest();
     }
 
     public function testListingAllShouldReturnJson()
     {
-        $this->EndpointsShouldReturnJson('listing', 'all', 'listings');
+        $this->booli->samplePluralRequest('listing');
     }
 
     public function testSoldAllShouldReturnJson()
     {
-        $this->EndpointsShouldReturnJson('sold', 'all', 'sold');
+        $this->booli->samplePluralRequest('sold');
     }
 
-    // public function testListingSingleShouldReturnJson()
-    // {
-    //     $this->EndpointsShouldReturnJson('listing', 'single');
-    // }
+    public function testListingSingleShouldReturnJson()
+    {
+        $this->booli->sampleSingleRequest('listing');
+    }
 
-    // public function testSoldSingleShouldReturnJson()
-    // {
-    //     $this->EndpointsShouldReturnJson('sold', 'single');
-    // }
+    public function testSoldSingleShouldReturnJson()
+    {
+        $this->booli->sampleSingleRequest('sold');
+    }
 }
