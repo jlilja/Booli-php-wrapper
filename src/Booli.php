@@ -2,7 +2,7 @@
 
 namespace Jcbl\Booliwrapper;
 
-use Jcbl\Booliwrapper\Authentication;
+use Jcbl\Booliwrapper\Authentication\Authentication;
 
 /**
  * Base class accepting the api credentials and call subclasses with overloading.
@@ -40,7 +40,7 @@ class Booli
      */
     public function __call($method, $args)
     {
-        $class = '\\Jcbl\\Booliwrapper\\Http\\' . ucfirst($method);
+        $class = "\\Jcbl\\Booliwrapper\\Http\\" . ucfirst($method);
 
         return new $class($this->auth);
     }

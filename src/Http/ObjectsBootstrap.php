@@ -3,7 +3,7 @@
 namespace Jcbl\Booliwrapper\Http;
 
 use Jcbl\Booliwrapper\Interfaces\ListingsInterface;
-use Jcbl\Booliwrapper\Authentication;
+use Jcbl\Booliwrapper\Authentication\Authentication;
 
 class ObjectsBootstrap implements ListingsInterface
 {
@@ -16,11 +16,11 @@ class ObjectsBootstrap implements ListingsInterface
     {
         $params = http_build_query($this->auth->getAuthInfo());
 
-        if ($filters['filters']) {
+        if ($filters["filters"]) {
             $filters = http_build_query($filters);
         }
 
-        $url = $this->host . "?" . $params . '&' . $filters;
+        $url = "http://api.booli.se/" . $this->endpoint . "/?" . $params . "&" . $filters;
 
         return $this->auth->request($url);
     }
@@ -29,7 +29,7 @@ class ObjectsBootstrap implements ListingsInterface
     {
         $params = $this->auth->getAuthInfo();
 
-        $url = $this->host . $id . "?&" . http_build_query($params);
+        $url = "http://api.booli.se/" . $this->endpoint . "/" . $id . "?&" . http_build_query($params);
 
         return $this->auth->request($url);
     }

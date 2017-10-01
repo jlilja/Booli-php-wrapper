@@ -2,11 +2,11 @@
 
 namespace Jcbl\Booliwrapper\Http;
 
-use Jcbl\Booliwrapper\Authentication;
+use Jcbl\Booliwrapper\Authentication\Authentication;
 
 class Area
 {
-    protected $host = 'http://api.booli.se/areas/';
+    protected $endpoint = "areas";
 
     public function __construct(Authentication $auth)
     {
@@ -17,7 +17,7 @@ class Area
     {
         $filters = http_build_query($filters);
         $params = http_build_query($this->auth->getAuthInfo());
-        $url = $this->host . "?" . $params . '&' . $filters;
+        $url = "http://api.booli.se/" . $this->endpoint . "/?" . $params . "&" . $filters;
 
         return $this->auth->request($url);
     }

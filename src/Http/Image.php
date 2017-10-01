@@ -6,31 +6,18 @@ use Jcbl\Booliwrapper\Exceptions\ImplementationException;
 
 class Image
 {
-    public function withImages()
+    protected $endpoint = "https://api.bcdn.se/cache/primary";
+
+    protected $thumbnailWidth = "140";
+
+    protected $thumbnailHeight = "94";
+
+    public function thumbnail($id)
     {
-        throw new ImplementationException();
-        // if ($this->response) {
-        // 	$response = json_decode($this->response);
-
-        // 	foreach ($response->listings as $item) {
-
-        // 		$image = 'https://api.bcdn.se/cache/primary_' . $item->booliId . '_140x94.jpg';
-
-        // 		if ($this->getImageSize($image) === 1027) {
-        // 			$item->image = null;
-        // 		} else {
-        // 			$item->image = $image;
-        // 		}
-
-        // 	}
-
-        // 	$this->response = json_encode($response);
-
-        // 	return $this;
-        // }
+        return $this->endpoint . "_" . $id . "_" . $this->thumbnailHeight . "x" . $this->thumbnailWidth . ".jpg";
     }
 
-    public function getImageSize($image)
+    public function filterOutImagesNotFound($url)
     {
         throw new ImplementationException();
         // $result = false;
