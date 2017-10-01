@@ -14,21 +14,21 @@ class BooliTest extends PHPUnit_Framework_TestCase
 
     public function testListingAllShouldReturnJson()
     {
-        $this->booli->samplePluralRequest('listing');
+        $this->booli->samplePluralRequest("listing");
     }
 
     public function testSoldAllShouldReturnJson()
     {
-        $this->booli->samplePluralRequest('sold');
+        $this->booli->samplePluralRequest("sold");
     }
 
     public function testListingSingleShouldReturnJson()
     {
-        $this->booli->sampleSingleRequest('listing');
+        $this->booli->sampleSingleRequest("listing");
     }
 
     public function testSoldSingleShouldReturnJson()
     {
-        $this->booli->sampleSingleRequest('sold');
+        $this->booli->sampleSingleRequest("sold");
     }
 }

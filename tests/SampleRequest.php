@@ -11,11 +11,11 @@ class SampleRequest extends PHPUnit_Framework_TestCase
     public function connect()
     {
         $dotenv = new Dotenv(dirname(__DIR__));
-        if (file_exists('.env')) {
+        if (file_exists(".env")) {
             $dotenv->load();
         }
 
-        $this->booli = new Booli(getenv('CALLER_ID'), getenv('API_KEY'));
+        $this->booli = new Booli(getenv("CALLER_ID"), getenv("API_KEY"));
     }
 
     public function sampleSingleRequest($endpoint)
@@ -38,10 +38,10 @@ class SampleRequest extends PHPUnit_Framework_TestCase
             ->booli
             ->{$endpoint}()
             ->all([
-                'q' => 'stockholm',
-                'limit' => 3,
-                'filters' => [
-                    'maxListPrice' => 2000000
+                "q" => "stockholm",
+                "limit" => 3,
+                "filters" => [
+                    "maxListPrice" => 2000000
                 ]
             ]);
 
