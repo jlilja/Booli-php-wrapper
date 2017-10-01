@@ -27,7 +27,8 @@
     },
     "autoload": {
         "psr-4" : {
-            "Jcbl\\Booliwrapper\\" : "src"
+            "Jcbl\\Booliwrapper\\" : "src",
+            "Jcbl\\Tests\\" : "tests"
         }
     },
     "scripts": {
