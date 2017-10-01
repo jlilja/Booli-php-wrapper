@@ -6,7 +6,7 @@ use Jcbl\Booliwrapper\Booli;
 use Dotenv\Dotenv;
 
 $dotenv = new Dotenv(dirname(__DIR__));
-if (file_exists($root_dir . '/.env')) {
+if (file_exists('.env')) {
     $dotenv->load();
 }
 
