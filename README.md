@@ -21,7 +21,7 @@ Initialize a new instance of the Booli wrapper class. Provide your key and calle
 
 After that you can make listing calls like this.
 
-    $listing = $booli->listing()->all([
+    $listingAll = $booli->listing()->all([
         'q' => 'stockholm',
         'limit' => 3,
         'filters' => [
@@ -29,7 +29,10 @@ After that you can make listing calls like this.
         ]
     ]);
 
-    echo $listing;
+    $listingSingle = $booli->listing()->single(BOOLI_ID);
+
+    echo $listingAll;
+    echo $listingSingle;
 
 To apply filters, pass filters as a second argument as an associative array.
 The get method accesses the response property, returning a json response.
@@ -38,8 +41,8 @@ The get method accesses the response property, returning a json response.
 
 | Endpoint      | Method name            |
 |---------------|------------------------|
-| listings      | listing()->all         |
-| listings      | listing()->single      |
-| sold          | sold()->all            |
-| sold          | sold()->single         |
-| area          | area()->get            |
+| listings      | listing()->all()       |
+| listings      | listing()->single()    |
+| sold          | sold()->all()          |
+| sold          | sold()->single()       |
+| area          | area()->get()          |
