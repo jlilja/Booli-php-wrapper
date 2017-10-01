@@ -38,12 +38,12 @@ class SampleRequest extends PHPUnit_Framework_TestCase
             ->booli
             ->{$endpoint}()
             ->all([
-            'q' => 'stockholm',
-            'limit' => 3,
-            'filters' => [
-                'maxListPrice' => 2000000
-            ]
-        ]);
+                'q' => 'stockholm',
+                'limit' => 3,
+                'filters' => [
+                    'maxListPrice' => 2000000
+                ]
+            ]);
 
         return $this->assertJson($response);
     }

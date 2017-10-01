@@ -5,9 +5,7 @@ namespace Jcbl\Tests;
 use Jcbl\Tests\SampleRequest;
 use PHPUnit_Framework_TestCase;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-class BooliTest extends PHPUnit_Framework_TestCase 
+class BooliTest extends PHPUnit_Framework_TestCase
 {
     public function __construct()
     {
