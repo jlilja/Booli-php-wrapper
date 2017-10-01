@@ -10,7 +10,6 @@ if (file_exists('.env')) {
     $dotenv->load();
 }
 
- 
 class BooliTest extends PHPUnit_Framework_TestCase {
 
     public function __construct()

@@ -21,7 +21,7 @@ class Booli
      * @param string $apiKey
      * @throws Exception if credentials are incorrect
      */
-    public function __construct(string $callerId = null, string $apiKey = null)
+    public function __construct($callerId = null, $apiKey = null)
     {
         try {
             $this->auth = new Authentication($callerId, $apiKey);
